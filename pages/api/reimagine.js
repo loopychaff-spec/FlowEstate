@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
       As a luxury interior designer, analyze this room and describe how it would be transformed into a ${style || 'Modern Luxury'} style. 

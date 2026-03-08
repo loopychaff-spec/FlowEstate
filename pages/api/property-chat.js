@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     // Format the conversation history
     const conversationContext = messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n');

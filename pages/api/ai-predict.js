@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const { propertyId, propertyData, timeline } = req.body;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     // Construct the prompt with strict JSON requirements
     const prompt = `
