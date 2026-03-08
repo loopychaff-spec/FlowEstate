@@ -93,6 +93,77 @@ export default function Dashboard() {
   };
 
 
+  const seedMarketplace = async () => {
+    setIsGenerating(true);
+    const seedData = [
+      {
+        title: "The Glass Pavillion",
+        location: "Montecito, CA",
+        price: "$28,500,000",
+        beds: 5,
+        baths: 6,
+        sqft: "12,000",
+        description: "A triumph of modern architecture, this glass pavillion sits on 5 acres of pristine coastal land. Features a world-class art gallery.",
+        image: "https://images.unsplash.com/photo-1600607687931-cebf698d2548?auto=format&fit=crop&w=1600&q=90",
+        images: ["https://images.unsplash.com/photo-1600607687931-cebf698d2548?auto=format&fit=crop&w=1600&q=90"],
+        user_email: "seed@flowestate.ai"
+      },
+      {
+        title: "Neo-Tokyo Penthouse",
+        location: "Shibuya, Tokyo",
+        price: "$15,900,000",
+        beds: 3,
+        baths: 3.5,
+        sqft: "4,200",
+        description: "Multi-level sky residence with 360-degree views of the Tokyo skyline. Interior features rare volcanic stone.",
+        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=90",
+        images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=90"],
+        user_email: "seed@flowestate.ai"
+      },
+      {
+        title: "The Brooklyn Ironworks",
+        location: "DUMBO, NY",
+        price: "$7,250,000",
+        beds: 4,
+        baths: 3,
+        sqft: "3,800",
+        description: "A converted 19th-century iron foundry transformed into a sprawling industrial loft with direct views of the Manhattan Bridge.",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=90",
+        images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=90"],
+        user_email: "seed@flowestate.ai"
+      },
+      {
+        title: "Azure Cliff Manor",
+        location: "Amalfi Coast, Italy",
+        price: "$32,000,000",
+        beds: 7,
+        baths: 9,
+        sqft: "15,000",
+        description: "Carved directly into the limestone cliffs, this legendary estate features private sea access via elevator and a terraced infinity pool.",
+        image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1600&q=90",
+        images: ["https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1600&q=90"],
+        user_email: "seed@flowestate.ai"
+      },
+      {
+        title: "Modernist Desert Oasis",
+        location: "Scottsdale, AZ",
+        price: "$9,400,000",
+        beds: 4,
+        baths: 5,
+        sqft: "6,500",
+        description: "Angular architecture blends seamlessly with the Sonoran desert landscape. Zero-edge pool and observatory deck.",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=90",
+        images: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=90"],
+        user_email: "seed@flowestate.ai"
+      }
+    ];
+
+    for (const item of seedData) {
+      await addProperty(item);
+    }
+    setIsGenerating(false);
+  };
+
   const handleAdd = (e) => {
     e.preventDefault();
     if (!newProp.title || !newProp.location || !newProp.price) return;
@@ -144,9 +215,16 @@ export default function Dashboard() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <h2 className="heading">Your Saved Properties</h2>
                 {user.role === 'Partner' && (
-                  <button className="btn-primary" onClick={() => setShowAddForm(!showAddForm)}>
-                    {showAddForm ? 'Cancel' : '+ Add Listing'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    {properties.length === 0 && (
+                      <button className="btn-secondary" onClick={seedMarketplace} disabled={isGenerating} style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}>
+                        {isGenerating ? 'Seeding...' : 'Seed Marketplace'}
+                      </button>
+                    )}
+                    <button className="btn-primary" onClick={() => setShowAddForm(!showAddForm)}>
+                      {showAddForm ? 'Cancel' : '+ Add Listing'}
+                    </button>
+                  </div>
                 )}
               </div>
 
