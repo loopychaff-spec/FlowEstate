@@ -5,7 +5,7 @@ const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
   
   // Start with an empty array of properties
   const [properties, setProperties] = useState([]);
@@ -86,7 +86,7 @@ export function AuthProvider({ children }) {
     fetchProperties();
 
     // Load theme
-    const storedTheme = localStorage.getItem('flowestate_theme') || 'dark';
+    const storedTheme = localStorage.getItem('flowestate_theme') || 'light';
     setTheme(storedTheme);
     document.documentElement.setAttribute('data-theme', storedTheme);
   }, []);
