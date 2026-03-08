@@ -60,6 +60,13 @@ export function AuthProvider({ children }) {
     
     // Load properties from Supabase
     const fetchProperties = async () => {
+      // Guard against missing supabase client
+      if (!supabase) {
+        console.warn('Supabase client not initialized. Using seed properties.');
+        setProperties(seedProperties);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('properties')
         .select('*')
@@ -103,6 +110,14 @@ export function AuthProvider({ children }) {
   };
 
   const addProperty = async (propertyData) => {
+    if (!supabase) {
+      console.error('Cannot add property: Supabase client not initialized.');
+      // Fallback for local testing if needed
+      const localId = 'local-' + Math.random().toString(36).substr(2, 9);
+      setProperties([...properties, { ...propertyData, id: localId }]);
+      return;
+    }
+
     const { data, error } = await supabase
       .from('properties')
       .insert([{
@@ -122,6 +137,11 @@ export function AuthProvider({ children }) {
   };
 
   const removeProperty = async (id) => {
+    if (!supabase) {
+      setProperties(properties.filter(p => p.id !== id));
+      return;
+    }
+
     const { error } = await supabase
       .from('properties')
       .delete()
