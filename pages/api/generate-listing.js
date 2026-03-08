@@ -18,20 +18,22 @@ export default async function handler(req, res) {
 
     const prompt = `
       You are an expert real estate copywriter and data extractor. 
-      I will provide you with rough notes about a property.
-      I need you to transform these notes into a structured, premium real estate listing.
+      I will provide you with rough notes, a URL, or a text snippet copied from a real estate website (like Zillow, Redfin, or a local brokerage).
+      
+      Your goal is to transform this raw information into a structured, premium real estate listing for FlowEstate AI.
       
       Requirements:
-      1. Create a captivating, luxurious 'title'.
-      2. Extract or infer the 'location' (City, State format preferred).
-      3. Format the 'price' elegantly (e.g., "$1,200,000" or "$850,000"). If no price is given, estimate one based on luxury context.
-      4. Extract or estimate 'beds', 'baths', and 'sqft'.
-      5. Write a short, enticing 2-sentence 'description'.
-      6. Provide an array of 3 'images' representing a premium home that fits the description. Use realistic, high-quality Unsplash URLs (e.g., modern architecture, luxury interiors, pools). DO NOT USE PLACEHOLDERS, give real URLs. YOU MUST ensure the URLs end with: ?auto=format&fit=crop&w=1600&q=90 to guarantee high resolution.
+      1. **Extract Data**: Look for Price, Beds, Baths, SqFt, and Location inside the text.
+      2. **Handle URLs**: If the input is just a URL, use your knowledge of that area/site to create a realistic mock listing that fits that URL's context.
+      3. **Premium Title**: Create a captivating, luxurious 'title' (e.g. "The Azure Peak Contemporary").
+      4. **Location**: Format as "City, State".
+      5. **Price**: Format elegantly (e.g. "$1,200,000").
+      6. **Description**: Write a short, enticing 2-sentence 'description' in a high-end tone.
+      7. **Images**: Provide an array of 3 realistic, high-quality Unsplash URLs that match the property's style. Ensure they end with: ?auto=format&fit=crop&w=1600&q=90.
       
-      Rough notes: "${notes}"
+      Input Data: "${notes}"
       
-      Respond ONLY with a valid JSON object matching this exact shape:
+      Respond ONLY with a valid JSON object:
       {
         "title": "String",
         "location": "String",
